@@ -1,0 +1,38 @@
+#!/bin/bash
+ 
+#PBS -N 081 
+#PBS -l select=1:ncpus=8:mem=32gb:mpiprocs=16
+#PBS -l walltime=8:00:00
+#PBS -j oe
+#PBS -m abe
+#PBS -M z5374194@ad.unsw.edu.au
+
+
+# As a general rule due to the variety of nodes in Katana you should request either
+# 8 or 16 cpu cores (ncpus).
+
+# Set the ANSYS_DIR variable so that we can easily refer to it.
+
+# export ANSYS_DIR=/srv/scratch/z5374194/2025T3/MMAN4410/MajorProject/081
+
+# Change to the directory 
+
+cd ${ANSYS_DIR}
+
+# Now we specify the version of ANSYS that we will be using.
+
+ANSYS_VER=2025R2
+
+# Now we load ANSYS
+module load intel-mpi/2021.7.1
+module load openmpi
+module load krb5/1.19.3
+module load ansys/${ANSYS_VER}
+
+# Now we run the ANSYS command on the file which contains the ANSYS commands.
+# This will work on any wbjn file including one that you have created on your laptop or
+# desktop.
+
+echo; echo "Now we start our ANSYS command"; echo
+
+runwb2 -B -R ${ANSYS_DIR}/081.wbjn
