@@ -35,4 +35,4 @@ module load ansys/${ANSYS_VER}
 
 echo; echo "Now we start our ANSYS command"; echo
 
-runwb2 -B -F "03_01.wbpj" -R "update_work.wbjn"
+runwb2 -B -F "03_01.wbpj" -R "update_workbech.wbjn"
