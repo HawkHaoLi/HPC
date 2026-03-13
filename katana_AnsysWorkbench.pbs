@@ -13,7 +13,7 @@
 
 # Set the ANSYS_DIR variable so that we can easily refer to it.
 
-# export DOCU_NAME = 03_01
+export DOCU_NAME = 03_01
 
 # Change to the directory 
 
