@@ -11,8 +11,8 @@
 # As a general rule due to the variety of nodes in Katana you should request either
 # 8 or 16 cpu cores (ncpus).
 
-# Set the ANSYS_DIR variable so that we can easily refer to it.
-
+# Set the DOCU_NAME variable so that we can easily refer to it.
+# Please change the DOCU_NAME variable base on how you name your files
 export DOCU_NAME = 03_01
 
 # Change to the directory 
@@ -23,9 +23,16 @@ cd "${PBS_O_WORKDIR}"
 
 ANSYS_VER=2025R2
 
-# Now we load ANSYS
+
+# Now we load prerequisite for Ansys
+
+# Load MPI (IntelMPI or OpenMPI)
+# Load Intel-MPI
 module load intel-mpi/2021.7.1
+
+# Load OpenMPI
 #module load openmpi
+
 module load krb5/1.19.3
 module load ansys/${ANSYS_VER}
 
@@ -35,4 +42,4 @@ module load ansys/${ANSYS_VER}
 
 echo; echo "Now we start our ANSYS command"; echo
 
-runwb2 -B -F "03_01.wbpj" -R "update_workbech.wbjn"
+runwb2 -B -F "${DOCU_NAME}.wbpj" -R "update_workbech.wbjn"
