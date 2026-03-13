@@ -5,7 +5,7 @@
 #PBS -l walltime=8:00:00
 #PBS -j oe
 #PBS -m abe
-#PBS -M z5374194@ad.unsw.edu.au
+#PBS -M zID@ad.unsw.edu.au
 
 
 # As a general rule due to the variety of nodes in Katana you should request either
@@ -13,11 +13,11 @@
 
 # Set the ANSYS_DIR variable so that we can easily refer to it.
 
-# export ANSYS_DIR=/srv/scratch/z5374194/2025T3/MMAN4410/MajorProject/081
+# export DOCU_NAME = 03_01
 
 # Change to the directory 
 
-cd ${ANSYS_DIR}
+cd "${PBS_O_WORKDIR}"
 
 # Now we specify the version of ANSYS that we will be using.
 
@@ -25,7 +25,7 @@ ANSYS_VER=2025R2
 
 # Now we load ANSYS
 module load intel-mpi/2021.7.1
-module load openmpi
+#module load openmpi
 module load krb5/1.19.3
 module load ansys/${ANSYS_VER}
 
@@ -35,4 +35,4 @@ module load ansys/${ANSYS_VER}
 
 echo; echo "Now we start our ANSYS command"; echo
 
-runwb2 -B -R ${ANSYS_DIR}/081.wbjn
+runwb2 -B -F "03_01.wbpj" -R "update_work.wbjn"
