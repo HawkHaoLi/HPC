@@ -7,6 +7,8 @@
 #PBS -m abe
 #PBS -M zID@ad.unsw.edu.au
 
+#Remove previous logs
+rm katana_AnsysWorkbench.pbs.*
 
 # As a general rule due to the variety of nodes in Katana you should request either
 # 8 or 16 cpu cores (ncpus).
