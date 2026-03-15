@@ -1,0 +1,71 @@
+#!/bin/bash
+ 
+#PBS -N Ansys_Mechanical 
+#PBS -l select=1:ncpus=1:mem=4gb:mpiprocs=1
+#PBS -l walltime=8:00:00
+#PBS -j oe
+#PBS -m abe
+#PBS -M z5374194@ad.unsw.edu.au
+
+# Set the DOCU_NAME variable so that we can easily refer to it, no space before and after =.
+# Please change the DOCU_NAME variable base on how you name your files
+
+export DOCU_NAME=03_01
+
+# As a general rule due to the variety of nodes in Katana you should request either
+# 8 or 16 cpu cores (ncpus).
+
+
+# Change to the directory 
+
+cd "${PBS_O_WORKDIR}"
+echo; echo "Current directory:"; echo {$PWD}; echo
+
+
+#Move previous logs
+mkdir previous_logs
+mv Ansys_Mechanical.o* previous_logs
+
+
+# Now we specify the version of ANSYS that we will be using.
+
+ANSYS_VER=2025R2
+
+if [ "$ANSYS_VER" = "2025R2" ]; then
+    ANSYS_CMD=ansys252
+elif [ "$ANSYS_VER" = "2025R1" ]; then
+    ANSYS_CMD=ansys251
+elif [ "$ANSYS_VER" = "2024R1" ]; then
+    ANSYS_CMD=ansys241
+elif [ "$ANSYS_VER" = "2024R2" ]; then
+    ANSYS_CMD=ansys242
+else
+    echo "Unknown ANSYS version: $ANSYS_VER"
+    exit 1
+fi
+
+# Now we load prerequisite for Ansys
+
+# Load MPI (IntelMPI or OpenMPI)
+# Load Intel-MPI
+module load intel-mpi/2021.7.1
+
+# Load OpenMPI
+#module load openmpi
+
+module load krb5/1.19.3
+module load ansys/${ANSYS_VER}
+
+cd ${DOCU_NAME}_files/dp0/SYS/MECH
+echo; echo "Current directory:"; echo {$PWD}; echo
+
+
+export OUT_FILE=$(find . -name "*solve.out")
+export DAT_FILE=$(find . -name "ds.dat")
+echo $OUT_FILE
+echo $DAT_FILE
+
+echo; echo "Now we start our ANSYS command"; echo
+
+$ANSYS_CMD -b -np 1 -i "$DAT_FILE" -o "$OUT_FILE"
+
