@@ -44,10 +44,14 @@ else
     exit 1
 fi
 
+# Remove all the package
+module purge
+
 # Now we load prerequisite for Ansys
 
 # Load MPI (IntelMPI or OpenMPI)
 # Load Intel-MPI
+# UNSW Katana is built on Intel MPI, therefore Intel-MPI should be used
 module load intel-mpi/2021.7.1
 
 # Load OpenMPI
